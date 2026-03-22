@@ -1,0 +1,31 @@
+{
+  "name": "khaled-portfolio",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "3",
+    "typescript": "~5.9.3",
+    "vite": "^8.0.1"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^19.2.4",
+    "react-bits": "^1.0.5",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^6.30.3"
+  }
+}

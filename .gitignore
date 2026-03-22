@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+khaled-portfolio/
+
+# Build output
+dist/
+
+# Local env
+.env
+.env.local
+.env.*.local
+
+# AI tool internals
+.agents/
+.claude/
+.cursor/
+
+# Editor
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Cursor AI rules
+.cursor\rules\codacy.mdc

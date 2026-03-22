@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #090a0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #222436;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4b526d;
+}
+
+/* Syntax highlight classes */
+.syn-keyword { color: #c678dd; }
+.syn-var     { color: #e06c75; }
+.syn-string  { color: #98c379; }
+.syn-fn      { color: #61afef; }
+.syn-comment { color: #5c6370; font-style: italic; }
+.syn-attr    { color: #d19a66; }
+.syn-type    { color: #E5C07B; }
+.syn-tag     { color: #e06c75; }
+
+/* JSON syntax classes */
+.json-key        { color: #00E5FF; }
+.json-string     { color: #39FF14; }
+.json-number     { color: #FF9E64; }
+.json-boolean    { color: #FF9E64; }
+.json-punctuation { color: #A6ACCD; }
+
+/* Bracket hover glow */
+.bracket-hover:hover {
+  color: #39FF14;
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+}
+
+/* Staggered fade-in for list items */
+.anim-item {
+  opacity: 0;
+  animation: fadeIn 0.4s ease forwards;
+}
+.anim-item:nth-child(1)  { animation-delay: 0.05s; }
+.anim-item:nth-child(2)  { animation-delay: 0.10s; }
+.anim-item:nth-child(3)  { animation-delay: 0.15s; }
+.anim-item:nth-child(4)  { animation-delay: 0.20s; }
+.anim-item:nth-child(5)  { animation-delay: 0.25s; }
+.anim-item:nth-child(6)  { animation-delay: 0.30s; }
+.anim-item:nth-child(7)  { animation-delay: 0.35s; }
+.anim-item:nth-child(8)  { animation-delay: 0.40s; }
+.anim-item:nth-child(9)  { animation-delay: 0.45s; }
+.anim-item:nth-child(10) { animation-delay: 0.50s; }
+.anim-item:nth-child(11) { animation-delay: 0.55s; }
+.anim-item:nth-child(12) { animation-delay: 0.60s; }
+.anim-item:nth-child(13) { animation-delay: 0.65s; }
+.anim-item:nth-child(14) { animation-delay: 0.70s; }
+.anim-item:nth-child(15) { animation-delay: 0.75s; }
+.anim-item:nth-child(16) { animation-delay: 0.80s; }
+.anim-item:nth-child(17) { animation-delay: 0.85s; }
+.anim-item:nth-child(18) { animation-delay: 0.90s; }
+.anim-item:nth-child(19) { animation-delay: 0.95s; }
+.anim-item:nth-child(20) { animation-delay: 1.00s; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Glow on hover for links */
+.glow-hover:hover {
+  text-shadow: 0 0 5px #00E5FF;
+  color: #ffffff;
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
