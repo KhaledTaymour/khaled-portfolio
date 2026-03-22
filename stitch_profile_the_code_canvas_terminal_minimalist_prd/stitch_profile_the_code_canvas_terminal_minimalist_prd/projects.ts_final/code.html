@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>projects.ts - The Code Canvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#39FF14",
+                        "background-light": "#090A0F",
+                        "background-dark": "#090A0F",
+                        "surface": "#13151D",
+                        "text-base": "#A6ACCD",
+                        "muted": "#4B526D",
+                        "accent": "#00E5FF",
+                        "border-color": "#222436",
+                    },
+                    fontFamily: {
+                        "display": ["'Fira Code'", "monospace"],
+                        "mono-btn": ["'JetBrains Mono'", "monospace"],
+                        "space": ["'Space Grotesk'", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "0px" },
+                    boxShadow: {
+                        'neon': '0 0 8px rgba(57, 255, 20, 0.4)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #090A0F;
+            color: #A6ACCD;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090A0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222436;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4B526D;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="flex h-screen w-full flex-col bg-background-dark overflow-hidden font-display text-text-base selection:bg-primary/30 selection:text-white">
+<!-- IDE Chrome: Top Bar -->
+<header class="flex h-10 w-full items-center border-b border-border-color bg-surface shrink-0 px-4 select-none">
+<div class="flex gap-2">
+<div class="h-3 w-3 rounded-full bg-[#FF5F56]"></div>
+<div class="h-3 w-3 rounded-full bg-[#FFBD2E]"></div>
+<div class="h-3 w-3 rounded-full bg-[#27C93F]"></div>
+</div>
+<div class="mx-auto text-xs text-muted">KhaledTaymour - The Code Canvas</div>
+</header>
+<div class="flex h-[calc(100vh-40px)] w-full grow overflow-hidden">
+<!-- SideNavBar Shared Component Implementation -->
+<aside class="hidden md:flex flex-col h-full w-64 border-r border-border-color bg-[#0d0e12] shrink-0 select-none">
+<div class="flex flex-col p-4 gap-4">
+<div class="flex flex-col gap-1">
+<span class="font-['Fira_Code'] text-[11px] uppercase tracking-widest text-primary font-bold">EXPLORER</span>
+<span class="font-['Fira_Code'] text-[10px] text-muted opacity-70">PORTFOLIO_V2</span>
+</div>
+</div>
+<nav class="flex flex-col">
+<a class="group flex items-center gap-2 px-4 py-1.5 font-['Fira_Code'] text-[11px] uppercase tracking-widest text-[#A6ACCD] opacity-50 hover:bg-[#1c1e26] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">homepage.tsx</span>
+                    homepage.tsx
+                </a>
+<a class="group flex items-center gap-2 px-4 py-1.5 font-['Fira_Code'] text-[11px] uppercase tracking-widest text-[#A6ACCD] opacity-50 hover:bg-[#1c1e26] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">skills.json</span>
+                    skills.json
+                </a>
+<a class="group flex items-center gap-2 px-4 py-1.5 font-['Fira_Code'] text-[11px] uppercase tracking-widest text-primary border-l-2 border-primary bg-[#1c1e26] transition-transform active:scale-[0.99]" href="#">
+<span class="material-symbols-outlined text-sm">projects.ts</span>
+                    projects.ts
+                </a>
+<a class="group flex items-center gap-2 px-4 py-1.5 font-['Fira_Code'] text-[11px] uppercase tracking-widest text-[#A6ACCD] opacity-50 hover:bg-[#1c1e26] hover:opacity-100 transition-all" href="#">
+<span class="material-symbols-outlined text-sm">terminal</span>
+                    contact.sh
+                </a>
+</nav>
+<div class="mt-auto flex flex-col border-t border-border-color/30">
+<div class="flex items-center gap-2 px-4 py-2 text-[#A6ACCD] opacity-50 hover:bg-[#1c1e26] cursor-pointer">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="font-['Fira_Code'] text-[11px] uppercase tracking-widest">SETTINGS</span>
+</div>
+</div>
+</aside>
+<!-- Main Editor Area -->
+<main class="flex flex-1 flex-col overflow-hidden bg-background-dark">
+<!-- TopNavBar Shared Component Implementation (Tabs) -->
+<div class="flex items-center w-full h-10 overflow-x-auto no-scrollbar bg-[#121318] border-b border-border-color shrink-0">
+<a class="text-[#A6ACCD] bg-[#121318] px-4 py-2 flex items-center gap-2 opacity-70 hover:bg-[#1c1e26] hover:text-[#39FF14] transition-colors h-full shrink-0 border-r border-border-color/30" href="#">
+<span class="material-symbols-outlined text-base">code</span>
+<span class="font-['Fira_Code'] text-xs">homepage.tsx</span>
+</a>
+<a class="text-[#A6ACCD] bg-[#121318] px-4 py-2 flex items-center gap-2 opacity-70 hover:bg-[#1c1e26] hover:text-[#39FF14] transition-colors h-full shrink-0 border-r border-border-color/30" href="#">
+<span class="material-symbols-outlined text-base text-[#FF9E64]">data_object</span>
+<span class="font-['Fira_Code'] text-xs">skills.json</span>
+</a>
+<div class="text-[#39FF14] bg-[#1c1e26] border-t-2 border-[#39FF14] px-4 py-2 flex items-center gap-2 h-full shrink-0 border-r border-border-color/30">
+<span class="material-symbols-outlined text-base text-[#3178C6]">javascript</span>
+<span class="font-['Fira_Code'] text-xs">projects.ts</span>
+<span class="material-symbols-outlined text-sm text-muted hover:text-white cursor-pointer ml-1">close</span>
+</div>
+<a class="text-[#A6ACCD] bg-[#121318] px-4 py-2 flex items-center gap-2 opacity-70 hover:bg-[#1c1e26] hover:text-[#39FF14] transition-colors h-full shrink-0 border-r border-border-color/30" href="#">
+<span class="material-symbols-outlined text-base text-accent">terminal</span>
+<span class="font-['Fira_Code'] text-xs">contact.sh</span>
+</a>
+<div class="ml-auto flex items-center gap-2 px-4 h-full border-l border-border-color/30">
+<span class="material-symbols-outlined text-muted text-lg hover:text-text-base cursor-pointer">split_screen</span>
+<span class="material-symbols-outlined text-muted text-lg hover:text-text-base cursor-pointer">more_vert</span>
+</div>
+</div>
+<!-- Code Content Area -->
+<div class="flex flex-1 overflow-auto mb-6">
+<!-- Line Numbers -->
+<div class="hidden md:flex w-[60px] flex-col items-end border-r border-border-color bg-background-dark py-4 pr-4 shrink-0 select-none text-muted text-sm leading-7">
+<span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+</div>
+<!-- Actual Editor Content -->
+<div class="flex-1 p-4 md:p-6 lg:p-8 overflow-y-auto">
+<div class="mb-6 text-sm leading-7 md:text-base">
+<span class="text-[#C678DD]">import</span> { <span class="text-[#E5C07B]">Project</span> } <span class="text-[#C678DD]">from</span> <span class="text-accent">'@/types'</span>;<br/>
+<br/>
+<span class="text-[#C678DD]">export</span> <span class="text-[#C678DD]">const</span> <span class="text-[#61AFEF]">projects</span>: <span class="text-[#E5C07B]">Project</span>[] = [
+                    </div>
+<!-- Projects Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6 pl-4 md:pl-8 border-l border-border-color/50 ml-2">
+<!-- Project Card 1 -->
+<article class="group relative flex h-[320px] max-w-[320px] flex-col border border-border-color bg-surface p-4 transition-all duration-300 hover:border-primary hover:shadow-neon">
+<div class="absolute -left-[33px] top-6 h-px w-8 bg-border-color/50 hidden md:block group-hover:bg-primary/50 transition-colors"></div>
+<div class="mb-3 text-xs text-muted flex justify-between items-center">
+<span>{</span>
+<span class="px-2 py-0.5 border border-muted/30 bg-background-dark text-[10px] tracking-wider">[STATUS: PENDING_COMMIT]</span>
+</div>
+<!-- ASCII Placeholder -->
+<div class="flex h-[140px] w-full items-center justify-center border border-border-color/50 bg-background-dark mb-4 text-muted text-[10px] leading-tight overflow-hidden whitespace-pre font-mono select-none">
++-------------------------+
+|      [ UI COMPONENT ]   |
+|                         |
+|  [x] Init  [ ] Render   |
+|                         |
+|  &lt;div className="..."&gt; |
+|    {children}           |
+|  &lt;/div&gt;                 |
++-------------------------+
+                            </div>
+<div class="flex flex-col gap-1 flex-1">
+<h3 class="text-accent text-sm font-semibold">"Enterprise Dashboard"</h3>
+<p class="text-xs text-muted leading-relaxed line-clamp-2">"High-performance React dashboard with real-time data visualization and complex state management."</p>
+</div>
+<div class="mt-auto flex items-center justify-between border-t border-border-color/50 pt-3">
+<span class="text-xs text-muted">},</span>
+<button class="text-muted hover:text-accent font-mono-btn text-xs transition-colors focus:outline-none flex items-center gap-1 cursor-not-allowed" disabled="">
+<span class="text-primary">&gt;</span> run demo
+                                </button>
+</div>
+</article>
+<!-- Project Card 2 -->
+<article class="group relative flex h-[320px] max-w-[320px] flex-col border border-border-color bg-surface p-4 transition-all duration-300 hover:border-primary hover:shadow-neon">
+<div class="absolute -left-[33px] top-6 h-px w-8 bg-border-color/50 hidden md:block group-hover:bg-primary/50 transition-colors"></div>
+<div class="mb-3 text-xs text-muted flex justify-between items-center">
+<span>{</span>
+<span class="px-2 py-0.5 border border-muted/30 bg-background-dark text-[10px] tracking-wider">[STATUS: PENDING_COMMIT]</span>
+</div>
+<!-- SVG Placeholder -->
+<div class="flex h-[140px] w-full items-center justify-center border border-border-color/50 bg-background-dark mb-4 text-muted overflow-hidden relative">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="20" id="grid" patternunits="userSpaceOnUse" width="20">
+<path d="M 20 0 L 0 0 0 20" fill="none" stroke="#222436" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+<circle cx="50%" cy="50%" fill="none" r="30" stroke="#4B526D" stroke-dasharray="4 4" stroke-width="2"></circle>
+<path d="M 50% 20% L 50% 80% M 20% 50% L 80% 50%" stroke="#4B526D" stroke-width="1"></path>
+</svg>
+<span class="absolute text-[10px] text-muted bg-background-dark px-2">API_INTEGRATION</span>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<h3 class="text-accent text-sm font-semibold">"FinTech Portal"</h3>
+<p class="text-xs text-muted leading-relaxed line-clamp-2">"Secure financial application built with Next.js, featuring strict typing and robust architecture."</p>
+</div>
+<div class="mt-auto flex items-center justify-between border-t border-border-color/50 pt-3">
+<span class="text-xs text-muted">},</span>
+<button class="text-muted hover:text-accent font-mono-btn text-xs transition-colors focus:outline-none flex items-center gap-1 cursor-not-allowed" disabled="">
+<span class="text-primary">&gt;</span> run demo
+                                </button>
+</div>
+</article>
+<!-- Project Card 3 (Skeleton Loader Style) -->
+<article class="group relative flex h-[320px] max-w-[320px] flex-col border border-border-color border-dashed bg-surface p-4 opacity-70">
+<div class="absolute -left-[33px] top-6 h-px w-8 bg-border-color/50 hidden md:block"></div>
+<div class="mb-3 text-xs text-muted flex justify-between items-center">
+<span>{</span>
+<span class="px-2 py-0.5 text-[10px] tracking-wider animate-pulse">// loading...</span>
+</div>
+<div class="flex h-[140px] w-full items-center justify-center border border-border-color/30 bg-background-dark mb-4 overflow-hidden relative">
+<div class="w-full h-full bg-border-color/10 animate-pulse"></div>
+</div>
+<div class="flex flex-col gap-2 flex-1 mt-2">
+<div class="h-4 w-3/4 bg-border-color/30 animate-pulse"></div>
+<div class="h-3 w-full bg-border-color/20 animate-pulse mt-2"></div>
+<div class="h-3 w-2/3 bg-border-color/20 animate-pulse"></div>
+</div>
+<div class="mt-auto flex items-center justify-between border-t border-border-color/50 pt-3">
+<span class="text-xs text-muted">}</span>
+<span class="text-[10px] text-muted">AWAITING_PROMISE</span>
+</div>
+</article>
+</div>
+<div class="text-sm leading-7 md:text-base">
+                        ];<br/>
+<br/>
+<span class="text-muted italic">// EOF</span>
+<span class="inline-block w-2 h-4 bg-primary ml-1 animate-pulse align-middle"></span>
+</div>
+</div>
+</div>
+<!-- Footer Shared Component Implementation -->
+<footer class="fixed bottom-0 left-0 w-full z-50 h-6 bg-[#39FF14] dark:bg-[#39FF14] flex justify-between items-center px-3 select-none">
+<div class="flex items-center gap-4">
+<span class="flex items-center gap-1 text-[#121318] font-['Fira_Code'] text-[10px] font-bold hover:bg-[#32e612] cursor-pointer px-1">
+<span class="material-symbols-outlined text-[14px]">rebase</span> Main*
+                    </span>
+<span class="flex items-center gap-1 text-[#121318] font-['Fira_Code'] text-[10px] font-bold hover:bg-[#32e612] cursor-pointer px-1">
+<span class="material-symbols-outlined text-[14px]">error</span> 0 
+                        <span class="material-symbols-outlined text-[14px]">warning</span> 0
+                    </span>
+</div>
+<div class="flex items-center h-full">
+<span class="text-[#121318] font-['Fira_Code'] text-[10px] font-bold px-3 hover:bg-[#32e612] cursor-pointer h-full flex items-center">Ln 14, Col 2</span>
+<span class="text-[#121318] font-['Fira_Code'] text-[10px] font-bold px-3 hover:bg-[#32e612] cursor-pointer h-full flex items-center">Spaces: 2</span>
+<span class="text-[#121318] font-['Fira_Code'] text-[10px] font-bold px-3 hover:bg-[#32e612] cursor-pointer h-full flex items-center">UTF-8</span>
+<span class="text-[#121318] font-['Fira_Code'] text-[10px] font-bold px-3 hover:bg-[#32e612] cursor-pointer h-full flex items-center">LF</span>
+<span class="text-[#121318] font-['Fira_Code'] text-[10px] font-bold px-3 hover:bg-[#32e612] cursor-pointer h-full flex items-center">{} JSON</span>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

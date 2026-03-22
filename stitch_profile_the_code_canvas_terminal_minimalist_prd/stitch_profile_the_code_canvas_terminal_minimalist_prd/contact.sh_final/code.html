@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Khaled Taymour - contact.sh</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&amp;family=JetBrains+Mono:wght@700&amp;family=Space+Grotesk:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#39FF14",
+                        background: {
+                            light: "#090A0F",
+                            dark: "#090A0F",
+                        },
+                        surface: "#13151D",
+                        text: "#A6ACCD",
+                        muted: "#4B526D",
+                        accent: "#00E5FF",
+                        ide: {
+                            sidebar: "#0d0e12",
+                            activity: "#121318",
+                            editor: "#090A0F",
+                            tab: "#121318",
+                            tabActive: "#1c1e26",
+                            footer: "#39FF14"
+                        }
+                    },
+                    fontFamily: {
+                        display: ["'Fira Code'", "monospace"],
+                        mono: ["'Fira Code'", "monospace"],
+                        secondary: ["'JetBrains Mono'", "monospace"],
+                        space: ["'Space_Grotesk'", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0px",
+                        lg: "0px",
+                        xl: "0px",
+                        full: "0px",
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Fira Code', monospace;
+            background-color: #090A0F;
+            color: #A6ACCD;
+        }
+        
+        .glow-hover:hover {
+            text-shadow: 0 0 5px #00E5FF;
+            color: #FFFFFF;
+        }
+
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090A0F;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4B526D;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #39FF14;
+        }
+    </style>
+</head>
+<body class="h-screen w-full flex flex-col bg-background-dark overflow-hidden selection:bg-primary/30 selection:text-primary">
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar: Activity Bar & Explorer -->
+<aside class="hidden md:flex flex-row w-64 bg-ide-sidebar border-r border-ide-activity/30">
+<!-- Activity Bar (Icons) -->
+<div class="w-12 bg-ide-activity flex flex-col items-center py-4 gap-4">
+<span class="material-symbols-outlined text-primary text-2xl">folder_open</span>
+<span class="material-symbols-outlined text-muted/50 text-2xl hover:text-text cursor-pointer">search</span>
+<span class="material-symbols-outlined text-muted/50 text-2xl hover:text-text cursor-pointer">horizontal_rule</span>
+<span class="material-symbols-outlined text-muted/50 text-2xl hover:text-text cursor-pointer">extension</span>
+<div class="mt-auto">
+<span class="material-symbols-outlined text-muted/50 text-2xl hover:text-text cursor-pointer">settings</span>
+</div>
+</div>
+<!-- Explorer Panel -->
+<div class="flex-1 flex flex-col">
+<div class="p-3 text-[11px] font-mono uppercase tracking-widest text-muted">Explorer</div>
+<div class="px-3 py-1 flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest text-text">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+                    PORTFOLIO_V2
+                </div>
+<div class="mt-2 space-y-0.5">
+<div class="pl-8 pr-4 py-1 text-xs text-muted hover:bg-ide-tabActive cursor-pointer flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">javascript</span> homepage.tsx
+                    </div>
+<div class="pl-8 pr-4 py-1 text-xs text-muted hover:bg-ide-tabActive cursor-pointer flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">data_object</span> skills.json
+                    </div>
+<div class="pl-8 pr-4 py-1 text-xs text-muted hover:bg-ide-tabActive cursor-pointer flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">description</span> projects.ts
+                    </div>
+<div class="pl-8 pr-4 py-1 text-xs text-primary bg-ide-tabActive border-l-2 border-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">terminal</span> contact.sh
+                    </div>
+</div>
+</div>
+</aside>
+<!-- Main Editor Area -->
+<div class="flex-1 flex flex-col min-w-0">
+<!-- Tab Bar -->
+<header class="h-10 bg-ide-activity flex items-center overflow-x-auto">
+<div class="flex h-full">
+<div class="px-4 h-full flex items-center gap-2 text-xs font-mono text-muted bg-ide-activity opacity-70 hover:opacity-100 cursor-pointer">
+                        homepage.tsx
+                    </div>
+<div class="px-4 h-full flex items-center gap-2 text-xs font-mono text-muted bg-ide-activity opacity-70 hover:opacity-100 cursor-pointer">
+                        skills.json
+                    </div>
+<div class="px-4 h-full flex items-center gap-2 text-xs font-mono text-muted bg-ide-activity opacity-70 hover:opacity-100 cursor-pointer">
+                        projects.ts
+                    </div>
+<div class="px-4 h-full flex items-center gap-2 text-xs font-mono text-primary bg-ide-tabActive border-t-2 border-primary">
+                        contact.sh
+                        <span class="material-symbols-outlined text-xs">close</span>
+</div>
+</div>
+<div class="ml-auto flex items-center px-4 gap-3 text-muted">
+<span class="material-symbols-outlined text-sm hover:text-text cursor-pointer">split_screen</span>
+<span class="material-symbols-outlined text-sm hover:text-text cursor-pointer">more_vert</span>
+</div>
+</header>
+<!-- File Content (Terminal Output) -->
+<main class="flex-1 overflow-y-auto bg-background-dark p-4 md:p-8 flex flex-col">
+<!-- Terminal Header / Info -->
+<div class="mb-8 text-muted text-sm md:text-base">
+<p>Last login: <span id="current-time">Tue Oct 24 10:23:41</span> on ttys001</p>
+<p>KhaledOS (v1.0.0) - Terminal</p>
+<p>Type 'help' for available commands.</p>
+</div>
+<!-- Terminal Output Sequence -->
+<div class="space-y-4 text-sm md:text-base leading-relaxed break-words">
+<!-- Auto-typed command 1 -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-2">
+<span class="text-primary font-semibold whitespace-nowrap">khaled@taymour:~$</span>
+<span class="text-text">ls -la</span>
+</div>
+<!-- Output 1 -->
+<div class="pl-4 md:pl-0 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-1 text-muted">
+<div>drwxr-xr-x  4 khaled staff  128 Oct 24 10:20 .</div>
+<div>drwxr-xr-x  6 khaled staff  192 Oct 24 09:15 ..</div>
+<div>-rw-r--r--  1 khaled staff  245 Oct 24 10:21 contact.txt</div>
+<div>-rwxr-xr-x  1 khaled staff  892 Oct 24 10:20 connect</div>
+</div>
+<!-- Auto-typed command 2 -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-2 mt-6">
+<span class="text-primary font-semibold whitespace-nowrap">khaled@taymour:~$</span>
+<span class="text-text">cat contact.txt</span>
+</div>
+<!-- Output 2 (Links) -->
+<div class="pl-4 md:pl-0 space-y-3 mt-2">
+<p class="text-text"># Initiating secure connection protocols...</p>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2">
+<span class="text-muted w-24">[LINKEDIN]</span>
+<a class="text-accent glow-hover transition-all duration-200 border-b border-transparent hover:border-accent pb-0.5 inline-block" href="https://www.linkedin.com/in/khaled-taymour/" rel="noopener noreferrer" target="_blank">
+                                https://www.linkedin.com/in/khaled-taymour/
+                            </a>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2">
+<span class="text-muted w-24">[GITHUB]</span>
+<a class="text-accent glow-hover transition-all duration-200 border-b border-transparent hover:border-accent pb-0.5 inline-block" href="https://github.com/KhaledTaymour" rel="noopener noreferrer" target="_blank">
+                                https://github.com/KhaledTaymour
+                            </a>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-2">
+<span class="text-muted w-24">[EMAIL]</span>
+<a class="text-accent glow-hover transition-all duration-200 border-b border-transparent hover:border-accent pb-0.5 inline-block" href="mailto:hello@khaledtaymour.com">
+                                hello@khaledtaymour.com
+                            </a>
+</div>
+</div>
+<!-- Active Prompt -->
+<div class="flex items-center gap-2 mt-6">
+<span class="text-primary font-semibold whitespace-nowrap">khaled@taymour:~$</span>
+<span class="w-2.5 h-5 bg-text inline-block cursor-blink ml-1 align-middle"></span>
+</div>
+</div>
+</main>
+</div>
+</div>
+<!-- IDE Footer -->
+<footer class="h-6 bg-primary text-ide-activity flex justify-between items-center px-3 font-mono text-[10px] font-bold z-50">
+<div class="flex items-center h-full">
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">
+<span class="material-symbols-outlined text-[12px]">account_tree</span>
+<span>Main*</span>
+</div>
+<div class="px-3 flex items-center gap-1 h-full opacity-80">
+<span>0 errors</span>
+<span class="ml-2">0 warnings</span>
+</div>
+</div>
+<div class="flex items-center h-full">
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">Ln 1, Col 1</div>
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">Spaces: 2</div>
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">UTF-8</div>
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">LF</div>
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">{} JSON</div>
+<div class="px-3 flex items-center gap-1 hover:bg-[#32e612] cursor-pointer h-full">
+<span class="material-symbols-outlined text-[12px]">notifications</span>
+</div>
+</div>
+</footer>
+<script>
+        document.getElementById('current-time').textContent = new Date().toString().split(' GMT')[0];
+    </script>
+</body></html>
