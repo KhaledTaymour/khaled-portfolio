@@ -148,20 +148,22 @@ export const workProjects: Project[] = [
 
 export const sideProjects: Project[] = [
   {
-    id: 'side-project-1',
-    title: '"// coming soon"',
-    description: '"Personal project — details to be added."',
-    tech: [],
-    status: 'WIP',
-    githubUrl: 'https://github.com/KhaledTaymour',
+    id: 'haptics-demo',
+    title: 'Haptics Demo',
+    description: 'A PWA drum machine with haptic feedback for the mobile web.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'PWA', 'Vite'],
+    status: 'SHIPPED',
+    githubUrl: 'https://github.com/KhaledTaymour/haptics-demo',
+    demoUrl: 'https://haptics-demo.pages.dev/',
   },
   {
-    id: 'side-project-2',
-    title: '"// coming soon"',
-    description: '"Personal project — details to be added."',
-    tech: [],
-    status: 'WIP',
-    githubUrl: 'https://github.com/KhaledTaymour',
+    id: 'salat-time',
+    title: 'Salat Time',
+    description: 'Prayer times PWA with ambient gradient animations.',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Motion', 'Zustand', 'PWA', 'Vite'],
+    status: 'SHIPPED',
+    githubUrl: 'https://github.com/KhaledTaymour/salat-time',
+    demoUrl: 'https://salat-time.pages.dev/',
   },
 ]
 
