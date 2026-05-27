@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Icon } from '@iconify/react'
 import { workProjects, sideProjects, type Project } from '@/data/projects'
 import { CodeSnippet } from '@/components/ui/CodeSnippet'
+import { Lightbox } from '@/components/ui/Lightbox'
 
 /** Map tech labels → Iconify icon IDs */
 const techIcons: Record<string, string> = {
@@ -39,15 +41,20 @@ const statusColors: Record<Project['status'], string> = {
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const isPlaceholder = project.id.startsWith('side-project')
+  const hasGallery = !!project.screenshots?.length
+  const [lightboxOpen, setLightboxOpen] = useState(false)
 
   return (
     <article
+      onClick={hasGallery ? () => setLightboxOpen(true) : undefined}
       className={`
         anim-item group relative flex flex-col border bg-elevated p-4
         transition-all duration-200 min-h-[300px]
         ${isPlaceholder
           ? 'border-dashed opacity-60 border-border-dim'
-          : 'cursor-pointer border-border-dim hover:border-terminal-green hover:shadow-neon-green'
+          : hasGallery
+            ? 'cursor-pointer border-border-dim hover:border-terminal-green hover:shadow-neon-green'
+            : 'border-border-dim'
         }
       `}
       style={{ animationDelay: `${index * 0.08}s` }}
@@ -93,6 +100,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.company}
           </span>
         )}
+        {hasGallery && (
+          <div className="absolute inset-0 flex items-center justify-center gap-1.5 bg-void-black/80 font-code text-xs text-terminal-green opacity-0 transition-opacity group-hover:opacity-100">
+            <Icon icon="material-symbols:image-outline" className="text-base" />
+            view {project.screenshots!.length} screenshots
+          </div>
+        )}
       </div>
 
       {/* Content */}
@@ -128,6 +141,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="flex justify-between items-center pt-3 mt-3 mt-auto border-t border-border-dim/50">
         <span className="text-xs text-faded-slate font-code">{'}'}</span>
         <div className="flex gap-2 items-center">
+          {hasGallery && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setLightboxOpen(true)
+              }}
+              className="flex gap-1 items-center font-mono text-xs transition-colors text-faded-slate hover:text-terminal-green"
+            >
+              <Icon icon="material-symbols:imagesmode-outline" className="text-sm" />
+              gallery
+            </button>
+          )}
           {project.githubUrl && (
             <a
               href={project.githubUrl}
@@ -152,6 +177,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           )}
         </div>
       </div>
+
+      {hasGallery && lightboxOpen && (
+        <Lightbox
+          shots={project.screenshots!}
+          title={project.title}
+          description={project.description}
+          onClose={() => setLightboxOpen(false)}
+        />
+      )}
     </article>
   )
 }
