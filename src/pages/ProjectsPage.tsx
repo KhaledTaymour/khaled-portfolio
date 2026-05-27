@@ -7,6 +7,7 @@ import { Lightbox } from '@/components/ui/Lightbox'
 /** Map tech labels → Iconify icon IDs */
 const techIcons: Record<string, string> = {
   'React':            'logos:react',
+  'React 19':         'logos:react',
   'TypeScript':       'logos:typescript-icon',
   'JavaScript':       'logos:javascript',
   'Tailwind CSS':     'logos:tailwindcss-icon',
@@ -31,6 +32,11 @@ const techIcons: Record<string, string> = {
   'PostgreSQL':       'logos:postgresql',
   'SQL Server':       'devicon:microsoftsqlserver',
   'Ant Design':       'logos:ant-design',
+}
+
+const customIcons: Record<string, string> = {
+  'SSE':       '/icons/sse.svg',
+  'Recharts':  '/icons/recharts.svg',
 }
 
 const statusColors: Record<Project['status'], string> = {
@@ -120,9 +126,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           <div className="flex flex-wrap gap-1.5 mt-2 items-center">
             {project.tech.map((t) => {
               const icon = techIcons[t]
+              const custom = customIcons[t]
               return icon ? (
                 <span key={t} title={t} className="inline-flex justify-center items-center w-5 h-5">
                   <Icon icon={icon} className="text-sm opacity-70 transition-opacity group-hover:opacity-100" />
+                </span>
+              ) : custom ? (
+                <span key={t} title={t} className="inline-flex justify-center items-center h-5">
+                  <img src={custom} alt={t} className="h-4 opacity-70 transition-opacity group-hover:opacity-100" />
                 </span>
               ) : (
                 <span
