@@ -1,3 +1,8 @@
+export interface Screenshot {
+  src: string       // path under public/
+  caption: string
+}
+
 export interface Project {
   id: string
   title: string
@@ -8,11 +13,31 @@ export interface Project {
   companyLogo?: string      // path to logo in src/assets/companies/
   githubUrl?: string
   demoUrl?: string
+  screenshots?: Screenshot[]  // opens a lightbox gallery when present
 }
 
 // ── Work Highlights ────────────────────────────────────────────────────────────
 
 export const workProjects: Project[] = [
+  {
+    id: 'rcmc-command-center',
+    title: '"RCMC Transport Command & Control Center"',
+    description:
+      '"Led the frontend architecture and a 3-engineer team to ship a mission-critical Hajj ' +
+      'transport command center in under 8 weeks — streaming live telemetry from ~35,000 buses ' +
+      'via Server-Sent Events into 255+ real-time KPIs across 8 operational phases, with an ' +
+      'Arabic-first RTL UI, live fleet map tracking, and sub-700ms production LCP."',
+    tech: ['React 19', 'TypeScript', 'SSE', 'TanStack Query', 'Recharts', 'Playwright'],
+    status: 'SHIPPED',
+    company: 'Intelmatix',
+    companyLogo: '/logos/intelmatix.png',
+    screenshots: [
+      { src: '/rcmc/dashboard.png', caption: 'Real-time arrival-phase KPI dashboard — figures redacted for confidentiality' },
+      { src: '/rcmc/bus-tracking.png', caption: 'Live fleet map: ~35K buses with clustering & status filters — figures redacted for confidentiality' },
+      { src: '/rcmc/alerts.png', caption: 'Real-time operational alerts with severity & phase filters — figures redacted for confidentiality' },
+      { src: '/rcmc/report.png', caption: 'Auto-generated A4 operational report with PDF export — figures redacted for confidentiality' },
+    ],
+  },
   {
     id: 'site-intelligence',
     title: '"Site Intelligence Platform"',

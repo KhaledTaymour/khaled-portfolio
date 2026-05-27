@@ -29,6 +29,8 @@ export const skillCategories: SkillCategory[] = [
       { label: "Microfrontends", icon: "logos:webpack" },
       { label: "Internationalization (i18n)", icon: "simple-icons:i18next" },
       { label: "Web Accessibility", icon: "logos:w3c" },
+      { label: "Server-Sent Events (SSE)", icon: "carbon:flow-stream" },
+      { label: "Recharts", icon: "tabler:chart-bar" },
     ],
   },
   {
