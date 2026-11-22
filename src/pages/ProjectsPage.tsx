@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Icon } from '@iconify/react'
 import { workProjects, sideProjects, type Project } from '@/data/projects'
 import { CodeSnippet } from '@/components/ui/CodeSnippet'
@@ -32,6 +32,18 @@ const techIcons: Record<string, string> = {
   'PostgreSQL':       'logos:postgresql',
   'SQL Server':       'devicon:microsoftsqlserver',
   'Ant Design':       'logos:ant-design',
+  'Vitest':           'logos:vitest',
+  'Node.js':          'logos:nodejs-icon',
+  'Supabase':         'logos:supabase-icon',
+  'Claude Code':      'logos:claude-icon',
+  'Claude':           'logos:claude-icon',
+  'Cursor':           'logos:cursor',
+  'MCP':              'simple-icons:modelcontextprotocol',
+  'OpenRouter':       'simple-icons:openrouter',
+  'Google Apps Script': 'simple-icons:googleappsscript',
+  'Grafana':          'logos:grafana',
+  'GitHub Actions':   'logos:github-actions',
+  'Bash':             'logos:bash-icon',
 }
 
 const customIcons: Record<string, string> = {
@@ -49,10 +61,35 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const isPlaceholder = project.id.startsWith('side-project')
   const hasGallery = !!project.screenshots?.length
   const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  // Show the toggle only when the clamped text actually overflows
+  const descRef = useRef<HTMLParagraphElement>(null)
+  const [isLong, setIsLong] = useState(false)
+  useLayoutEffect(() => {
+    const el = descRef.current
+    if (!el) return
+    const measure = () => {
+      if (!expanded) setIsLong(el.scrollHeight > el.clientHeight + 1)
+    }
+    measure()
+    const ro = new ResizeObserver(measure)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [expanded])
 
   return (
     <article
-      onClick={hasGallery ? () => setLightboxOpen(true) : undefined}
+      onClick={
+        hasGallery
+          ? (e) => {
+              // The lightbox renders in a portal, but React still bubbles its clicks
+              // (X button, backdrop) up to this card. Without this check, closing it
+              // would immediately reopen it.
+              if (!e.currentTarget.contains(e.target as Node)) return
+              setLightboxOpen(true)
+            }
+          : undefined
+      }
       className={`
         anim-item group relative flex flex-col border bg-elevated p-4
         transition-all duration-200 min-h-[300px]
@@ -119,9 +156,21 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <h3 className="text-sm font-semibold leading-snug text-cyber-cyan font-code">
           {project.title}
         </h3>
-        <p className="mt-1 text-xs leading-relaxed text-faded-slate line-clamp-3">
+        <p ref={descRef} className={`mt-1 text-xs leading-relaxed text-faded-slate ${expanded ? '' : 'line-clamp-3'}`}>
           {project.description}
         </p>
+        {isLong && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              setExpanded((v) => !v)
+            }}
+            aria-expanded={expanded}
+            className="self-start font-code text-[11px] text-cyber-cyan/80 hover:text-cyber-cyan"
+          >
+            {expanded ? '[-] less' : '[+] more'}
+          </button>
+        )}
         {project.tech.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-2 items-center">
             {project.tech.map((t) => {
@@ -164,15 +213,22 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               gallery
             </button>
           )}
+          {project.privateRepo && (
+            <span className="flex gap-1 items-center font-mono text-xs text-faded-slate" title="Source code is private">
+              <Icon icon="material-symbols:lock-outline" className="text-sm" />
+              private repo
+            </span>
+          )}
           {project.githubUrl && (
             <a
               href={project.githubUrl}
+              aria-label={`${project.title.replace(/"/g, "")} on GitHub`}
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors text-faded-slate hover:text-terminal-green"
               onClick={(e) => e.stopPropagation()}
             >
-              <Icon icon="logos:github-icon" className="text-base" />
+              <Icon icon="mdi:github" className="text-base" />
             </a>
           )}
           {project.demoUrl && (
@@ -230,8 +286,6 @@ export function ProjectsPage() {
       {/* Side projects section */}
       <div className="mb-2">
         <CodeSnippet code="// ── Personal / Side Projects ─────────────────────────────────" />
-        <br />
-        <CodeSnippet code="// TODO: add your GitHub projects here" />
       </div>
       <div className="mb-4">
         <CodeSnippet code="export const sideProjects: Project[] = [" />
