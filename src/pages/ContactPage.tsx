@@ -51,11 +51,7 @@ export function ContactPage() {
           Last login: <span className="text-lavender">{currentTime}</span> on
           ttys001
         </p>
-        <p>KhaledOS (v1.0.0) — Terminal</p>
-        <p>
-          Type <span className="text-terminal-green">'help'</span> for available
-          commands.
-        </p>
+        <p>KhaledOS (v2.0.0) — Terminal</p>
       </div>
 
       {/* Command: ls -la */}
@@ -148,6 +144,7 @@ export function ContactPage() {
                 <Icon icon="mdi:location" className="inline" />
               </span>{" "}
               Located in{" "}
+              <Icon icon={profile.countryFlagIcon} className="inline align-[-2px] me-1" />
               <span className="text-lavender">{profile.location}</span> —
               Transferable Iqama
             </p>
