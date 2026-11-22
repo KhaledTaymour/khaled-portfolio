@@ -1,16 +1,10 @@
 import { useLocation } from 'react-router-dom'
 import { Icon } from '@iconify/react'
-
-const fileMap: Record<string, string> = {
-  '/':         'homepage.tsx',
-  '/skills':   'skills.json',
-  '/projects': 'projects.ts',
-  '/contact':  'contact.sh',
-}
+import { fileForPath } from '@/lib/files'
 
 export function Breadcrumb() {
   const { pathname } = useLocation()
-  const file = fileMap[pathname] ?? 'homepage.tsx'
+  const { file } = fileForPath(pathname)
 
   return (
     <div className="hidden md:flex items-center px-4 h-7 text-xs text-faded-slate bg-editor-alt/40 border-b border-border-dim gap-1 shrink-0 select-none font-code">
