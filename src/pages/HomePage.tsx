@@ -1,4 +1,8 @@
+import { useLayoutEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { gsap } from "gsap";
+import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
+import { TextPlugin } from "gsap/TextPlugin";
 import { Icon } from "@iconify/react";
 import { Highlight } from "prism-react-renderer";
 import { CodeCursor } from "@/components/ui/CodeCursor";
@@ -12,14 +16,17 @@ function CodeHero() {
     `const DeveloperProfile = () => {`,
     `  const name = "${profile.name}"`,
     `  const role = "${profile.role}"`,
-    `  const location = "${profile.location} // Open to worldwide relocation 🌍"`,
+    `  const location = "${profile.location}" // open to worldwide relocation`,
     ``,
     `  const yearsExperience = ${profile.yearsExperience}`,
-    `  const isAvailable = true`,
+    `  const isAvailable = ${profile.isAvailable}`,
     `  const coreStack = [${profile.coreStack.map((s) => `"${s}"`).join(", ")}]`,
     ``,
+    `  // ${profile.tagline}`,
+    `  const approach = (problem) => solve(build(think(problem)))`,
+    ``,
     `  return (`,
-    `    <Profile name={name} role={role} />`,
+    `    <Profile name={name} role={role} approach={approach} />`,
     `  );`,
     `};`,
     ``,
@@ -27,33 +34,106 @@ function CodeHero() {
   ].join("\n");
 
   return (
-    <div className="flex pt-6 text-sm leading-7">
+    <div className="pt-6 pr-4 font-code text-sm leading-7">
       <Highlight code={code} language="tsx" theme={editorTheme}>
         {({ tokens, getLineProps, getTokenProps }) => (
           <>
-            {/* Line numbers */}
-            <div className="w-12 shrink-0 flex flex-col items-end text-faded-slate text-xs select-none pr-4">
-              {tokens.map((_, i) => (
-                <div key={i}>{i + 1}</div>
-              ))}
-            </div>
-
-            {/* Code content */}
-            <div className="flex-1 pl-2 font-code text-sm leading-7">
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })}>
+            {/* Number and code share a row, so wrapped lines stay aligned */}
+            {tokens.map((line, i) => (
+              <div key={i} className="flex" data-anim="code-line">
+                <span className="w-10 sm:w-12 shrink-0 text-right pr-3 sm:pr-4 text-faded-slate text-xs leading-7 select-none">
+                  {i + 1}
+                </span>
+                <div
+                  {...getLineProps({ line })}
+                  className="flex-1 min-w-0 whitespace-pre-wrap break-words pl-2"
+                >
                   {line.map((token, key) => (
                     <span key={key} {...getTokenProps({ token })} />
                   ))}
                   {i === tokens.length - 1 && <CodeCursor />}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </>
         )}
       </Highlight>
     </div>
   );
+}
+
+/**
+ * Text that can be animated without shifting the page. By default only the
+ * real copy shows. During the intro the real copy turns invisible (still
+ * holding the layout) and an absolutely positioned overlay animates on top;
+ * when the intro ends, the overlay is hidden again, so the text never appears
+ * twice for copy/paste, Ctrl+F or crawlers.
+ */
+function StableAnimatedText({ text, anim }: { text: string; anim: string }) {
+  return (
+    <span className="relative block">
+      <span data-anim-layer="copy">{text}</span>
+      <span
+        aria-hidden="true"
+        data-anim={anim}
+        data-anim-layer="overlay"
+        // overflow-hidden + break-all: scrambled text has no spaces and must not overflow sideways
+        className="absolute inset-0 hidden overflow-hidden break-all select-none"
+      >
+        {text}
+      </span>
+    </span>
+  );
+}
+
+gsap.registerPlugin(ScrambleTextPlugin, TextPlugin);
+
+/**
+ * Homepage intro, ~2.3s in total: code lines slide in like a file opening,
+ * the name decodes from scrambled characters, then the tagline types out.
+ * Runs only without prefers-reduced-motion; any click or key press finishes it.
+ */
+function useHomeIntro(scope: React.RefObject<HTMLElement | null>) {
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia(scope.current ?? undefined);
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      const tl = gsap.timeline({
+        // Hand the text back to the real copy once the intro is over
+        onComplete: () => {
+          gsap.set("[data-anim-layer=overlay]", { display: "none" });
+          gsap.set("[data-anim-layer=copy]", { opacity: 1 });
+        },
+      });
+      tl.set("[data-anim-layer=overlay]", { display: "block" }, 0)
+        .set("[data-anim-layer=copy]", { opacity: 0 }, 0)
+        .from("[data-anim=code-line]", {
+        opacity: 0,
+        x: -12,
+        duration: 0.35,
+        stagger: 0.04,
+        ease: "power2.out",
+      }, 0)
+        .to("[data-anim=name]", {
+          duration: 1.1,
+          scrambleText: { text: profile.name, chars: "upperCase", revealDelay: 0.35, speed: 0.6 },
+        }, 0.15)
+        .set("[data-anim=tagline]", { text: "" }, 0)
+        .to("[data-anim=tagline]", {
+          duration: 1.4,
+          text: { value: profile.tagline },
+          ease: "none",
+        }, 0.9);
+
+      const finish = () => tl.progress(1);
+      window.addEventListener("keydown", finish, { once: true });
+      window.addEventListener("pointerdown", finish, { once: true });
+      return () => {
+        window.removeEventListener("keydown", finish);
+        window.removeEventListener("pointerdown", finish);
+      };
+    });
+    return () => mm.revert(); // restores the original text and styles
+  }, [scope]);
 }
 
 // PREVIEW.EXE bento card
@@ -71,15 +151,20 @@ function PreviewBento() {
         {/* Left: hero info */}
         <div className="md:col-span-2">
           <h1 className="font-headline text-5xl lg:text-6xl font-extrabold text-terminal-green tracking-tighter mb-3 uppercase">
-            {profile.name}
+            <StableAnimatedText text={profile.name} anim="name" />
           </h1>
           <p className="font-headline text-xl text-cyber-cyan font-light mb-2">
             {profile.role}
           </p>
-          <p className="font-code text-sm text-faded-slate mb-6">
+          <p className="font-headline text-lg text-lavender mb-3">
+            <StableAnimatedText text={profile.tagline} anim="tagline" />
+          </p>
+          {/* Full summary as a doc comment: wraps instead of being cut at 12 words */}
+          <p className="font-code text-sm text-faded-slate mb-6 max-w-prose leading-relaxed">
             <SyntaxSpan type="comment">
-              {"// "}
-              {profile.summary.split(" ").slice(0, 12).join(" ")}…
+              {"/** "}
+              {profile.summary}
+              {" */"}
             </SyntaxSpan>
           </p>
           <div className="flex flex-wrap gap-3">
@@ -96,6 +181,13 @@ function PreviewBento() {
             >
               &gt; CONTACT_ME
             </button>
+            <button
+              onClick={() => navigate("/career")}
+              className="flex items-center gap-2 border border-warm-amber text-warm-amber px-6 py-3 font-mono text-sm hover:bg-warm-amber/10 transition-colors"
+            >
+              <Icon icon="material-symbols:sports-esports" className="text-base" />
+              PLAY_CAREER_RUN
+            </button>
           </div>
         </div>
 
@@ -106,6 +198,7 @@ function PreviewBento() {
             <span className="font-code text-xs uppercase">Location</span>
           </div>
           <p className="font-body text-lavender text-sm mb-4">
+            <Icon icon={profile.countryFlagIcon} className="inline-block align-[-2px] me-1.5" />
             {profile.location} • Open to Relocation
           </p>
 
@@ -143,8 +236,11 @@ function PreviewBento() {
 }
 
 export function HomePage() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  useHomeIntro(rootRef);
+
   return (
-    <div className="min-h-full">
+    <div ref={rootRef} className="min-h-full">
       <CodeHero />
       <PreviewBento />
     </div>

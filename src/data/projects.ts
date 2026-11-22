@@ -13,6 +13,7 @@ export interface Project {
   companyLogo?: string      // path to logo in src/assets/companies/
   githubUrl?: string
   demoUrl?: string
+  privateRepo?: boolean       // code is private, so there is no GitHub link
   screenshots?: Screenshot[]  // opens a lightbox gallery when present
 }
 
@@ -27,7 +28,7 @@ export const workProjects: Project[] = [
       'transport command center in under 8 weeks — streaming live telemetry from ~35,000 buses ' +
       'via Server-Sent Events into 255+ real-time KPIs across 8 operational phases, with an ' +
       'Arabic-first RTL UI, live fleet map tracking, and sub-700ms production LCP."',
-    tech: ['React 19', 'TypeScript', 'SSE', 'TanStack Query', 'Recharts', 'Playwright'],
+    tech: ['React 19', 'TypeScript', 'SSE', 'TanStack Query', 'Recharts', 'Vitest', 'Playwright'],
     status: 'SHIPPED',
     company: 'Intelmatix',
     companyLogo: '/logos/intelmatix.png',
@@ -39,23 +40,59 @@ export const workProjects: Project[] = [
     ],
   },
   {
+    id: 'llm-features',
+    title: '"LLM-Powered Product Features"',
+    description:
+      '"Owning the frontend integration with backend AI services: the UX for streaming ' +
+      'model responses and tool calls inside the product."',
+    tech: ['React', 'TypeScript', 'LLM streaming', 'Tool calls'],
+    status: 'WIP',
+    company: 'Intelmatix',
+    companyLogo: '/logos/intelmatix.png',
+  },
+  {
+    id: 'ai-assisted-engineering',
+    title: '"AI-Assisted Engineering & Knowledge Sharing"',
+    description:
+      '"Drove Claude Code and Cursor adoption across the FE team: shared configs, MCP ' +
+      'integrations and hands-on sessions to ship features faster. I also prepare the weekly ' +
+      'tech updates for our team meeting, curated by an AI newsletter digest I built (see side projects)."',
+    tech: ['Claude Code', 'Cursor', 'MCP'],
+    status: 'SHIPPED',
+    company: 'Intelmatix',
+    companyLogo: '/logos/intelmatix.png',
+  },
+  {
     id: 'site-intelligence',
     title: '"Site Intelligence Platform"',
     description:
-      '"Overhauled and scaled a geospatial analytics platform with Google Maps integration, ' +
-      'a recommender engine that drove a 6x growth in onboarded customers across KSA."',
+      '"Overhauled and scaled a geospatial analytics platform with Google Maps integration ' +
+      'and shipped a recommender engine that contributed to 6x growth in onboarded customers across KSA."',
     tech: ['React', 'TypeScript', 'Google Maps', 'TanStack Query'],
     status: 'SHIPPED',
     company: 'Intelmatix',
     companyLogo: '/logos/intelmatix.png',
   },
   {
-    id: 'workforce-scheduling',
-    title: '"Workforce Scheduling Module"',
+    id: 'resources-scheduler',
+    title: '"Resources Timeline Scheduler"',
     description:
-      '"Reworked state management patterns using Zustand and TanStack Query, ' +
-      'delivering a noticeably more responsive scheduling UI for enterprise clients."',
+      '"Built a resources timeline scheduler from scratch, with weekly and daily views, ' +
+      'when no library fit; reworked its state with Zustand and TanStack Query for a ' +
+      'noticeably more responsive scheduling UI for enterprise clients."',
     tech: ['React', 'Zustand', 'TanStack Query', 'TypeScript'],
+    status: 'SHIPPED',
+    company: 'Intelmatix',
+    companyLogo: '/logos/intelmatix.png',
+  },
+  {
+    id: 'fe-platform',
+    title: '"Frontend Platform & Reliability"',
+    description:
+      '"Set up production observability with Grafana + Faro; hardened CI/CD (removed ' +
+      'duplicate runs for ~30% lower pipeline cost, added Slack release notifications); ' +
+      'stabilized the Module Federation microfrontends and started frontend i18n."',
+    tech: ['Grafana', 'Faro', 'GitHub Actions', 'Module Federation', 'i18n'],
     status: 'SHIPPED',
     company: 'Intelmatix',
     companyLogo: '/logos/intelmatix.png',
@@ -92,7 +129,7 @@ export const workProjects: Project[] = [
       '(Google, Esri, Bing) into a unified emergency response interface."',
     tech: ['React', 'Redux', 'Maps APIs', 'Sass', 'Ant Design'],
     status: 'SHIPPED',
-    company: 'QSIT (ESRI North-East Africa)',
+    company: 'QSIT (formerly ESRI North-East Africa)',
     companyLogo: '/logos/esri.png',
   },
   {
@@ -104,7 +141,7 @@ export const workProjects: Project[] = [
       'for mission-critical workflows."',
     tech: ['JavaScript', 'ArcGIS JS API', 'Google Maps API', 'Kendo UI', 'ag-Grid'],
     status: 'SHIPPED',
-    company: 'QSIT (ESRI North-East Africa)',
+    company: 'QSIT (formerly ESRI North-East Africa)',
     companyLogo: '/logos/esri.png',
   },
   {
@@ -116,7 +153,7 @@ export const workProjects: Project[] = [
       'them to live data sources."',
     tech: ['C#', 'Entity Framework', 'Windows Forms', 'Kendo UI', 'SQL Server'],
     status: 'SHIPPED',
-    company: 'QSIT (ESRI North-East Africa)',
+    company: 'QSIT (formerly ESRI North-East Africa)',
     companyLogo: '/logos/esri.png',
   },
   {
@@ -129,7 +166,7 @@ export const workProjects: Project[] = [
       'and agricultural land dredging."',
     tech: ['C#', 'JavaScript', 'PostgreSQL', 'PostGIS', 'Hexagon Erdas™'],
     status: 'SHIPPED',
-    company: 'Edge-Pro',
+    company: 'EDGE Pro',
     companyLogo: '/logos/edge-pro.png',
   },
   {
@@ -141,7 +178,7 @@ export const workProjects: Project[] = [
       'automating the full lifecycle from raw spatial data to styled prints."',
     tech: ['C#', 'Windows Forms', 'PostgreSQL', 'PostGIS', 'Hexagon GeoMedia™'],
     status: 'SHIPPED',
-    company: 'Edge-Pro',
+    company: 'EDGE Pro',
     companyLogo: '/logos/edge-pro.png',
   },
   {
@@ -152,7 +189,7 @@ export const workProjects: Project[] = [
       'and Irrigation\'s rivers and canals network."',
     tech: ['JavaScript', 'PostgreSQL', 'PostGIS', 'Hexagon Mapp Enterprise™'],
     status: 'SHIPPED',
-    company: 'Edge-Pro',
+    company: 'EDGE Pro',
     companyLogo: '/logos/edge-pro.png',
   },
   {
@@ -163,15 +200,88 @@ export const workProjects: Project[] = [
       'and assignments for a security services company."',
     tech: ['C#', 'PostgreSQL', 'PostGIS', 'Skyline™'],
     status: 'SHIPPED',
-    company: 'Edge-Pro',
+    company: 'EDGE Pro',
     companyLogo: '/logos/edge-pro.png',
   },
 ]
 
 // ── Personal / Side Projects ──────────────────────────────────────────────────
-// TODO: add your GitHub projects here
 
 export const sideProjects: Project[] = [
+  {
+    id: 'weekly-journal-digest',
+    title: 'Weekly Journal Digest',
+    description:
+      'Feeds the weekly tech updates I prepare for our team meeting. A Google Apps Script reads a ' +
+      'week of newsletters, runs them through LLMs via OpenRouter and emails one briefing: TL;DR, ' +
+      'themes, top picks and things to try, ranked by my interests. I chose the models with ' +
+      'bake-offs on cost, coverage and writing quality. Links are swapped for markers, so a model ' +
+      'can never invent a URL. Costs under $0.05 a week.',
+    tech: ['JavaScript', 'Google Apps Script', 'OpenRouter', 'Claude', 'Node test'],
+    status: 'SHIPPED',
+    privateRepo: true,
+  },
+  {
+    id: 'hijri-crescent',
+    title: 'hijri-crescent',
+    description:
+      "TypeScript package that returns today's Hijri date per country as officially announced " +
+      "by each country's Islamic authority (Egypt, Saudi Arabia, UAE, Kuwait, Jordan), " +
+      'instead of a calculated estimate, with a live status page.',
+    tech: ['TypeScript', 'Node.js', 'GitHub Actions'],
+    status: 'OPEN_SOURCE',
+    githubUrl: 'https://github.com/hijri-js/hijri-crescent',
+    demoUrl: 'https://hijri-js.github.io/hijri-crescent',
+  },
+  {
+    id: 'fluid-skills',
+    title: 'fluid-skills',
+    description:
+      'Claude Code skill suite for breakpoint-free responsive layouts and Arabic RTL: audits UI ' +
+      'for width media queries, physical left/right and fixed sizing, then proposes Tailwind fixes.',
+    tech: ['Claude Code', 'Tailwind CSS'],
+    status: 'OPEN_SOURCE',
+    githubUrl: 'https://github.com/KhaledTaymour/fluid-skills',
+  },
+  {
+    id: 'claude-statusline',
+    title: 'claude-statusline',
+    description:
+      'ANSI-colored status line for Claude Code showing model, plan, context and quota usage. ' +
+      'Cross-platform: Bash and PowerShell.',
+    tech: ['Claude Code', 'Bash', 'PowerShell'],
+    status: 'OPEN_SOURCE',
+    githubUrl: 'https://github.com/KhaledTaymour/claude-statusline',
+  },
+  {
+    id: 'habit-tracker',
+    title: 'Habit Tracker',
+    description: 'Habit tracker PWA with Google login, scheduled push reminders and streaks.',
+    tech: ['React 19', 'TypeScript', 'Vite', 'Supabase', 'PWA'],
+    status: 'SHIPPED',
+    githubUrl: 'https://github.com/KhaledTaymour/habit-tracker',
+    demoUrl: 'https://habit-tracker-2qa.pages.dev',
+  },
+  {
+    id: 'gymtracker',
+    title: 'GymTracker',
+    description:
+      'Solo full-stack progressive-overload tracker PWA: schema design, REST integration and ' +
+      'offline-first sync on Supabase (Postgres + Auth), deployed on Cloudflare Pages.',
+    tech: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Supabase', 'PWA'],
+    status: 'SHIPPED',
+    privateRepo: true,
+  },
+  {
+    id: 'sms-to-sheets',
+    title: 'SMS-to-Sheets Expense Tracker',
+    description:
+      'An iOS Shortcut parses payment SMS and calls an API-key-secured Google Apps Script web app ' +
+      'that writes to Sheets, replacing manual logging with zero-touch tracking.',
+    tech: ['iOS Shortcuts', 'Google Apps Script', 'Google Sheets'],
+    status: 'SHIPPED',
+    privateRepo: true,
+  },
   {
     id: 'haptics-demo',
     title: 'Haptics Demo',
@@ -189,6 +299,16 @@ export const sideProjects: Project[] = [
     status: 'SHIPPED',
     githubUrl: 'https://github.com/KhaledTaymour/salat-time',
     demoUrl: 'https://salat-time.pages.dev/',
+  },
+  {
+    id: 'portfolio',
+    title: 'This Portfolio',
+    description:
+      'The IDE-themed site you are on: designed in Stitch, built with Claude Code, ' +
+      'deployed on Cloudflare Pages.',
+    tech: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    status: 'OPEN_SOURCE',
+    githubUrl: 'https://github.com/KhaledTaymour/khaled-portfolio',
   },
 ]
 

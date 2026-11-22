@@ -1,12 +1,6 @@
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Icon } from '@iconify/react'
-
-const FILES = [
-  { path: '/',         file: 'homepage.tsx', icon: 'material-symbols:code',        iconColor: 'text-[#61afef]' },
-  { path: '/skills',   file: 'skills.json',  icon: 'material-symbols:data-object', iconColor: 'text-yellow-400' },
-  { path: '/projects', file: 'projects.ts',  icon: 'material-symbols:javascript',  iconColor: 'text-[#3178C6]' },
-  { path: '/contact',  file: 'contact.sh',   icon: 'material-symbols:terminal',    iconColor: 'text-cyber-cyan' },
-]
+import { FILES } from '@/lib/files'
 
 export function Sidebar() {
   const navigate = useNavigate()
