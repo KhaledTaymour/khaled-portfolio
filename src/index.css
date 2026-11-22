@@ -80,3 +80,28 @@
 /* No scrollbar utility */
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* career.run: alternate the coder's two leg frames while walking */
+.run-frame-a { animation: runFrame 0.24s steps(1) infinite; }
+.run-frame-b { animation: runFrame 0.24s steps(1) -0.12s infinite; }
+@keyframes runFrame {
+  0%   { opacity: 1; }
+  50%  { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-item { opacity: 1; animation: none; }
+  .animate-blink, .run-frame-a, .run-frame-b { animation: none; }
+}
+
+/* career.run: brief pixel flicker when jumping back to an earlier stage */
+.respawn { animation: respawn 0.3s steps(3) 1; }
+@keyframes respawn {
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  75%  { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .respawn { animation: none; }
+}
