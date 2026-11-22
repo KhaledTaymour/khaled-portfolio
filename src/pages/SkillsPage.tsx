@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { skillCategories } from '@/data/skills'
 import { profile } from '@/data/profile'
+import { certifications, education, spokenLanguages } from '@/data/experience'
 
 interface JsonLineProps {
   lineNo: number
@@ -11,7 +12,7 @@ interface JsonLineProps {
 
 function JsonLine({ lineNo, indent = 0, children, className = '' }: JsonLineProps) {
   return (
-    <div className={`flex whitespace-pre font-code text-sm leading-7 ${className}`}>
+    <div className={`flex whitespace-pre-wrap font-code text-sm leading-7 ${className}`}>
       <span className="hidden md:inline-block w-10 text-right pr-4 text-faded-slate shrink-0 select-none">
         {lineNo}
       </span>
@@ -20,91 +21,108 @@ function JsonLine({ lineNo, indent = 0, children, className = '' }: JsonLineProp
   )
 }
 
+interface ArrayEntry {
+  label: string
+  detail?: string
+  icon?: string
+}
+
+interface ArraySection {
+  key: string
+  entries: ArrayEntry[]
+}
+
+// Every array rendered below the profile object, in order.
+const sections: ArraySection[] = [
+  ...skillCategories.map((c) => ({ key: c.label, entries: c.skills })),
+  { key: 'certifications', entries: certifications },
+  { key: 'education', entries: education },
+  { key: 'spokenLanguages', entries: spokenLanguages },
+]
+
+const Key = ({ name }: { name: string }) => (
+  <>
+    <span className="json-punctuation">"</span>
+    <span className="json-key">{name}</span>
+    <span className="json-punctuation">": </span>
+  </>
+)
+
 export function SkillsPage() {
   let lineNo = 1
 
   return (
     <div className="p-4 md:p-6 pb-12">
-      {/* Opening brace */}
       <JsonLine lineNo={lineNo++}>
         <span className="json-punctuation bracket-hover">{'{'}</span>
       </JsonLine>
 
       {/* Profile section */}
       <JsonLine lineNo={lineNo++} indent={1}>
-        <span className="json-punctuation">"</span>
-        <span className="json-key">profile</span>
-        <span className="json-punctuation">": {'{'}</span>
+        <Key name="profile" />
+        <span className="json-punctuation">{'{'}</span>
       </JsonLine>
       <JsonLine lineNo={lineNo++} indent={2}>
-        <span className="json-punctuation">"</span>
-        <span className="json-key">role</span>
-        <span className="json-punctuation">": "</span>
-        <span className="json-string">{profile.role}</span>
-        <span className="json-punctuation">",</span>
+        <Key name="role" />
+        <span className="json-string">"{profile.role}"</span>
+        <span className="json-punctuation">,</span>
       </JsonLine>
       <JsonLine lineNo={lineNo++} indent={2}>
-        <span className="json-punctuation">"</span>
-        <span className="json-key">yearsExperience</span>
-        <span className="json-punctuation">": </span>
+        <Key name="yearsExperience" />
         <span className="json-number">{profile.yearsExperience}</span>
         <span className="json-punctuation">,</span>
       </JsonLine>
       <JsonLine lineNo={lineNo++} indent={2}>
-        <span className="json-punctuation">"</span>
-        <span className="json-key">isAvailable</span>
-        <span className="json-punctuation">": </span>
-        <span className="json-boolean">true</span>
+        <Key name="isAvailable" />
+        <span className="json-boolean">{String(profile.isAvailable)}</span>
       </JsonLine>
       <JsonLine lineNo={lineNo++} indent={1}>
-        <span className="json-punctuation">{"}"}{","}</span>
+        <span className="json-punctuation">{'},'}</span>
       </JsonLine>
 
-      {/* Skill categories */}
-      {skillCategories.map((category) => {
+      {sections.map((section, sectionIdx) => {
         const openLine = lineNo++
-        const skillLines: number[] = category.skills.map(() => lineNo++)
+        const entryLines = section.entries.map(() => lineNo++)
         const closeLine = lineNo++
+        const isLastSection = sectionIdx === sections.length - 1
 
         return (
-          <div key={category.key}>
+          <div key={section.key}>
             <JsonLine lineNo={openLine} indent={1}>
-              <span className="json-punctuation">"</span>
-              <span className="json-key">{category.label}</span>
-              <span className="json-punctuation">": </span>
+              <Key name={section.key} />
               <span className="json-punctuation bracket-hover">[</span>
             </JsonLine>
 
-            {category.skills.map((skill, i) => (
+            {section.entries.map((entry, i) => (
               <JsonLine
-                key={skill.label}
-                lineNo={skillLines[i]}
+                key={entry.label}
+                lineNo={entryLines[i]}
                 indent={2}
                 className="anim-item items-center"
               >
                 <span className="json-punctuation">"</span>
-                {skill.icon && (
+                {entry.icon && (
                   <Icon
-                    icon={skill.icon}
+                    icon={entry.icon}
                     className="inline-block w-4 h-4 mr-1.5 align-middle relative -top-px"
                   />
                 )}
-                <span className="json-string">{skill.label}</span>
+                <span className="json-string">{entry.label}</span>
+                {entry.detail && <span className="text-faded-slate"> · {entry.detail}</span>}
                 <span className="json-punctuation">
-                  {i < category.skills.length - 1 ? '",' : '"'}
+                  {i < section.entries.length - 1 ? '",' : '"'}
                 </span>
               </JsonLine>
             ))}
 
             <JsonLine lineNo={closeLine} indent={1}>
               <span className="json-punctuation bracket-hover">]</span>
-              <span className="json-punctuation">,</span>
+              {!isLastSection && <span className="json-punctuation">,</span>}
             </JsonLine>
           </div>
         )
       })}
 
-      {/* Closing brace */}
       <JsonLine lineNo={lineNo}>
         <span className="json-punctuation bracket-hover">{'}'}</span>
         <span className="animate-blink inline-block w-2 h-4 bg-lavender/50 ml-1 align-middle" />
